@@ -7,7 +7,7 @@ import sys
 import time
 
 __author__ = "Mario Chorvath"
-__license__ = "GPL"
+__license__ = "MIT"
 
 """
 Translate text over https://lindat.mff.cuni.cz/services/translation
