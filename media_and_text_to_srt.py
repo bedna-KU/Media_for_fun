@@ -6,16 +6,20 @@ from pydub.silence import detect_nonsilent
 
 help = """
 ENTER:
-'media_file' 'text_file'
+'media_file' 'text_file' 'output_file'
+
+EXAMPLE:
+vocals.wav John_Lennon-Imagine.txt subtiles.srt
 """
 
 # Checking the number of input parameters 
-if len(sys.argv) < 3 or sys.argv[1] == "-h":
+if len(sys.argv) < 4 or sys.argv[1] == "-h":
     print(help)
     exit()
 
 media_file_name = sys.argv[1]
 text_file_name = sys.argv[2]
+outpt_file_name = sys.argv[3]
 
 def load_text(text_file_name):
     with open(text_file_name) as file:
@@ -59,8 +63,8 @@ def get_sentences_from_audio(path, text_file_name, offset=300):
     # Calculate all line lengths 
     text_len = 0
     for text_item in text_lines:
-        # text_item = text_item.replace(" ", "")
-        # text_item = text_item.replace(".", "")
+        text_item = text_item.replace(" ", "")
+        text_item = text_item.replace(".", "")
         text_len += len(text_item)
 
     print(">>> vocal_len", vocal_len, "ms")
@@ -69,7 +73,7 @@ def get_sentences_from_audio(path, text_file_name, offset=300):
     print(">>> text_len / vocal_len", chars_per_ms, "chars")
 
     # Make subtitles
-    with open('subtitle.srt', 'w') as srtfile:
+    with open(outpt_file_name, 'w') as srtfile:
         for idx, item in enumerate(loud):
             if len(text_lines[idx]) == 0:
                 exit("ERROR: empty string")
